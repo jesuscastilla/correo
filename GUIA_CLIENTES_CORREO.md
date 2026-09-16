@@ -1,6 +1,6 @@
 # Guía de uso del correo — Lebeche (`corrientelebeche.es`)
 
-> **Webmail:** `https://webmail.corrientelebeche.es/` · **Buzón:** `monderas@corrientelebeche.es`
+> **Webmail:** `https://webmail.corrientelebeche.es/` (o `https://correo.corrientelebeche.es/`) · **Buzón:** `monderas@corrientelebeche.es`
 > Servidor de correo: **Hostalia** (plataforma "Dominio Absoluto").
 
 ---
@@ -23,7 +23,7 @@
 
 ## 2. Abrir el correo desde el webmail (Roundcube)
 
-1. Entra en `https://webmail.corrientelebeche.es/`.
+1. Entra en `https://webmail.corrientelebeche.es/` (o `https://correo.corrientelebeche.es/`).
 2. **Usuario:** `monderas@corrientelebeche.es` · **Contraseña:** la del buzón.
 3. (Opcional) marca **"Recordarme"**.
 

@@ -41,15 +41,17 @@ Cliente → https://webmail.corrientelebeche.es/   (Cloudflare Proxied, cert Uni
 
 ```
 CNAME  webmail  pelotxo.synology.me  🟠 Proxied
+CNAME  correo   pelotxo.synology.me  🟠 Proxied
 ```
 
 ## Reverse Proxy (DSM) — manual
 
-`Control Panel → Login Portal → Advanced → Reverse Proxy → Create`:
+`Control Panel → Login Portal → Advanced → Reverse Proxy → Create` (una regla por subdominio):
 
 - **Source:** HTTPS · `webmail.corrientelebeche.es` · 443  ← ⚠️ protocolo **HTTPS** (si queda en HTTP, DSM da "puerto en uso")
+- **Source:** HTTPS · `correo.corrientelebeche.es` · 443
 - **Destination:** HTTP · `localhost` · 8090
-- Certificado: asignar `Cloudflare Origin` a la regla (si no, Cloudflare en `Full (strict)` da **526**).
+- Certificado: asignar `Cloudflare Origin` a cada regla (si no, Cloudflare en `Full (strict)` da **526**).
 
 ## Operación diaria
 
@@ -80,6 +82,11 @@ cd /volume2/docker/roundcube && sudo /usr/local/bin/docker compose up -d --pull 
 ## Verificación de entregabilidad
 
 - Enviar un correo desde el webmail a la dirección de **mail-tester.com** → esperar 9-10/10 con DKIM/DMARC `pass`.
+
+## Contactos — ✅ importados de Synology Contacts
+
+- **66 contactos** importados a la libreta del usuario `monderas@corrientelebeche.es`.
+- Origen: PostgreSQL `synocontacts` (Synology Contacts) → tabla `addressbook_object.vcard_text` → vCard → Roundcube.
 
 ## Seguridad
 
