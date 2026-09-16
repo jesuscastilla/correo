@@ -1,8 +1,8 @@
 # Correo — webmail de Lebeche (Roundcube en Docker)
 
-> Estado (2026-09-16): **Roundcube desplegado en el NAS vía Docker** (Container Manager).
-> Es solo la **interfaz web**: los buzones y el MX siguen en **Hostalia**. Se publica en
-> `https://webmail.corrientelebeche.es/`.
+> Estado (2026-09-16): ✅ **funcionando** — Roundcube desplegado en el NAS vía Docker
+> (Container Manager). Es solo la **interfaz web**: los buzones y el MX siguen en **Hostalia**.
+> Se publica en `https://webmail.corrientelebeche.es/`.
 
 ## Arquitectura
 
@@ -22,6 +22,14 @@
 ## DNS (Cloudflare)
 
 - `CNAME webmail → pelotxo.synology.me` 🟠 **Proxied**.
+
+## Reverse Proxy (DSM)
+
+`Panel de control → Portal de inicio de sesión → Avanzado → Proxy inverso`:
+
+- **Origen:** `HTTPS` · `webmail.corrientelebeche.es` · `443`  ← ⚠️ protocolo **HTTPS** (si queda en HTTP, DSM da "puerto en uso")
+- **Destino:** `HTTP` · `localhost` · `8090`
+- **Certificado:** asignar **`Cloudflare Origin`** a la regla (si no, Cloudflare en `Full (strict)` da **Error 526**).
 
 ## Notas del dominio
 

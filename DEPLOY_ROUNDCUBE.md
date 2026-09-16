@@ -41,9 +41,9 @@ CNAME  webmail  pelotxo.synology.me  🟠 Proxied
 
 `Control Panel → Login Portal → Advanced → Reverse Proxy → Create`:
 
-- **Source:** HTTPS · `webmail.corrientelebeche.es` · 443
+- **Source:** HTTPS · `webmail.corrientelebeche.es` · 443  ← ⚠️ protocolo **HTTPS** (si queda en HTTP, DSM da "puerto en uso")
 - **Destination:** HTTP · `localhost` · 8090
-- Certificado: `Cloudflare Origin` (cubre `*.corrientelebeche.es`).
+- Certificado: asignar `Cloudflare Origin` a la regla (si no, Cloudflare en `Full (strict)` da **526**).
 
 ## Operación diaria
 
