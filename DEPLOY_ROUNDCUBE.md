@@ -64,10 +64,16 @@ cd /volume2/docker/roundcube && sudo /usr/local/bin/docker compose up -d --pull 
 /usr/local/mariadb10/bin/mysqldump -u root -p roundcube > /volume2/docker/roundcube/backup-roundcube.sql
 ```
 
-## Mejoras pendientes (entregabilidad)
+## Autenticación de correo (SPF / DKIM / DMARC) — ✅ configurado
 
-- **DMARC** (`_dmarc` TXT) y **DKIM** (pedir el selector a Hostalia).
-- Probar envío/recepción con un buzón real y pasar **mail-tester.com**.
+- **SPF**: `v=spf1 redirect=spf.dominioabsoluto.net` (Hostalia).
+- **DKIM**: `domabs._domainkey` → TXT con la clave pública de Hostalia (selector de "Dominio Absoluto").
+- **DMARC**: `_dmarc` → `v=DMARC1; p=none; rua=mailto:monderas@corrientelebeche.es; fo=1; adkim=s; aspf=s`.
+  - Empezar en `p=none` (monitorizar) y subir a `quarantine`/`reject` cuando todo alinee.
+
+## Verificación de entregabilidad
+
+- Enviar un correo desde el webmail a la dirección de **mail-tester.com** → esperar 9-10/10 con DKIM/DMARC `pass`.
 
 ## Seguridad
 

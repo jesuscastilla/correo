@@ -31,11 +31,12 @@
 - **Destino:** `HTTP` · `localhost` · `8090`
 - **Certificado:** asignar **`Cloudflare Origin`** a la regla (si no, Cloudflare en `Full (strict)` da **Error 526**).
 
-## Notas del dominio
+## Autenticación de correo (SPF / DKIM / DMARC) — ✅ configurado
 
-- El correo usa `corrientelebeche.es` (sin `www`): `MX 10 mx.corrientelebeche.es`,
-  SPF por redirect a `spf.dominioabsoluto.net`.
-- Pendiente (entregabilidad): **DMARC** y **DKIM**.
+- **SPF:** `v=spf1 redirect=spf.dominioabsoluto.net` (Hostalia).
+- **DKIM:** `domabs._domainkey` → TXT con la clave pública de Hostalia (selector de "Dominio Absoluto").
+- **DMARC:** `_dmarc` → `v=DMARC1; p=none; rua=mailto:monderas@corrientelebeche.es; fo=1; adkim=s; aspf=s`.
+  - Empezar en `p=none` (monitorizar) y subir a `quarantine`/`reject` cuando todo alinee.
 
 > 🔐 No subir credenciales ni configuraciones sensibles a este repo (`.env` está en `.gitignore`).
 
