@@ -1,26 +1,33 @@
-# Correo — servidor de correo de Lebeche (Roundcube Webmail)
+# Correo — webmail de Lebeche (Roundcube en Docker)
 
-> Estado: **pendiente de configurar**. Este repo/carpeta alojará la configuración del servidor
-> de correo de la asociación, basado en **Roundcube Webmail** (paquete de **SynoCommunity**) sobre
-> el NAS Synology.
+> Estado (2026-09-16): **Roundcube desplegado en el NAS vía Docker** (Container Manager).
+> Es solo la **interfaz web**: los buzones y el MX siguen en **Hostalia**. Se publica en
+> `https://webmail.corrientelebeche.es/`.
 
-## Qué se hará aquí (más adelante)
-- Instalar **Roundcube** desde **SynoCommunity** en el NAS.
-- Conectar Roundcube al servidor de correo (IMAP/SMTP) del dominio `corrientelebeche.es`.
-- Documentar la configuración (bases de datos, vhost de Web Station, HTTPS, usuarios).
-- Guardar scripts/plantillas de configuración versionables (sin secretos).
+## Arquitectura
+
+- **Contenedor:** `roundcube/roundcubemail:latest` (Apache + PHP 8.4, arm64).
+- **Base de datos:** MariaDB 10 del NAS (puerto 3307), base `roundcube`.
+- **IMAP/SMTP:** `ssl://imap.corrientelebeche.es:993` / `tls://smtp.corrientelebeche.es:587`
+  (⚠️ el puerto 465 está cerrado; usar 587 + STARTTLS).
+- **Publicación:** subdominio `webmail.corrientelebeche.es` → Reverse Proxy de DSM → `localhost:8090`.
+- **Volúmenes:** `/volume2/docker/roundcube/{html,config,temp}`.
+
+## Ficheros del repo
+
+- `docker/compose.yaml` — stack de Roundcube (secretos en `.env`, no versionado).
+- `docker/.env.example` — plantilla de variables secretas.
+- `DEPLOY_ROUNDCUBE.md` — guía completa de despliegue y operación.
+
+## DNS (Cloudflare)
+
+- `CNAME webmail → pelotxo.synology.me` 🟠 **Proxied**.
 
 ## Notas del dominio
-- Dominio: `corrientelebeche.es` (canónico `www` para la web; el correo usa `corrientelebeche.es`).
-- Los registros de correo (MX/SPF/imap/pop3/smtp) están en Cloudflare apuntando a Hostalia:
-  - `MX 10 mx.corrientelebeche.es`
-  - `TXT v=spf1 redirect=spf.dominioabsoluto.net`
-  - `A mx/imap/pop3/smtp` → `217.116.0.227/.237/.237/.228`
 
-## Pendiente
-- [ ] Instalar Roundcube (SynoCommunity) en el NAS.
-- [ ] Configurar la conexión IMAP/SMTP.
-- [ ] Publicar el webmail (subruta `corrientelebeche.es/webmail/` o subdominio).
-- [ ] HTTPS y acceso.
+- El correo usa `corrientelebeche.es` (sin `www`): `MX 10 mx.corrientelebeche.es`,
+  SPF por redirect a `spf.dominioabsoluto.net`.
+- Pendiente (entregabilidad): **DMARC** y **DKIM**.
 
-> 🔐 No subir credenciales ni configuraciones sensibles a este repo.
+> 🔐 No subir credenciales ni configuraciones sensibles a este repo (`.env` está en `.gitignore`).
+
