@@ -8,8 +8,9 @@
 
 - **Contenedor:** `roundcube/roundcubemail:latest` (Apache + PHP 8.4, arm64).
 - **Base de datos:** MariaDB 10 del NAS (puerto 3307), base `roundcube`.
-- **IMAP/SMTP:** `ssl://imap.corrientelebeche.es:993` / `tls://smtp.corrientelebeche.es:587`
-  (⚠️ el puerto 465 está cerrado; usar 587 + STARTTLS).
+- **IMAP/SMTP:** `ssl://imap.dominioabsoluto.net:993` / `tls://smtp.dominioabsoluto.net:587`
+  (⚠️ hay que usar los hostnames del **proveedor**, no `…corrientelebeche.es`: el certificado TLS
+  del servidor es para `*.dominioabsoluto.net`. El puerto 465 está cerrado → 587 + STARTTLS).
 - **Publicación:** subdominio `webmail.corrientelebeche.es` → Reverse Proxy de DSM → `localhost:8090`.
 - **Volúmenes:** `/volume2/docker/roundcube/{html,config,temp}`.
 

@@ -26,10 +26,16 @@ Cliente → https://webmail.corrientelebeche.es/   (Cloudflare Proxied, cert Uni
 ## Variables clave (compose.yaml)
 
 - `ROUNDCUBEMAIL_DB_*` → BD MariaDB (`host.docker.internal:3307`).
-- `ROUNDCUBEMAIL_DEFAULT_HOST=ssl://imap.corrientelebeche.es` + `DEFAULT_PORT=993`.
-- `ROUNDCUBEMAIL_SMTP_SERVER=tls://smtp.corrientelebeche.es` + `SMTP_PORT=587`.
+- `ROUNDCUBEMAIL_DEFAULT_HOST=ssl://imap.dominioabsoluto.net` + `DEFAULT_PORT=993`.
+- `ROUNDCUBEMAIL_SMTP_SERVER=tls://smtp.dominioabsoluto.net` + `SMTP_PORT=587`.
   ⚠️ **465 está cerrado** en Hostalia; usar **587 + STARTTLS**.
+- `ROUNDCUBEMAIL_USERNAME_DOMAIN=corrientelebeche.es` (permite entrar con el usuario suelto).
 - `ROUNDCUBEMAIL_DES_KEY` → fijo (en `.env`); **no cambiarlo** una vez haya datos.
+
+> ⚠️ **Por qué `dominioabsoluto.net` y no `corrientelebeche.es`:** el servidor de correo de Hostalia
+> presenta un certificado TLS para `*.dominioabsoluto.net` (DigiCert). Si usas `imap/smtp.corrientelebeche.es`,
+> Roundcube da "Error de conexión con el servidor IMAP" porque falla la verificación del certificado.
+> `imap/smtp.dominioabsoluto.net` resuelven a las **mismas IPs** y su certificado valida correctamente.
 
 ## DNS (Cloudflare) — manual
 
