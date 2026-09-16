@@ -19,6 +19,7 @@
 - `docker/compose.yaml` — stack de Roundcube (secretos en `.env`, no versionado).
 - `docker/.env.example` — plantilla de variables secretas.
 - `DEPLOY_ROUNDCUBE.md` — guía completa de despliegue y operación.
+- `GUIA_CLIENTES_CORREO.md` — cómo configurar el correo en móvil/escritorio y usar el webmail.
 
 ## DNS (Cloudflare)
 
