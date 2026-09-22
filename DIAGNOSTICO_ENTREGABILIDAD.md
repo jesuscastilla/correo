@@ -169,4 +169,28 @@ $base='https://cloudflare-dns.com/dns-query'; $h=@{accept='application/dns-json'
   (comprobar accesos en Hostalia), porque un buzón comprometido hunde la
   reputación y es un riesgo de seguridad grave.
 
+---
+
+## 11. Qué NO hacer (conceptos erróneos frecuentes)
+
+Verificado en vivo el 2026-09-22. Son consejos genéricos que **no aplican a este
+caso** y, en un caso, son contraproducentes:
+
+1. **NO bajar DMARC a alineación relajada (`adkim=r; aspf=r`).**
+   El `.eml` demuestra que la firma DKIM usa `d=corrientelebeche.es` (idéntico al
+   `From`), así que la alineación **estricta ya da `pass`**. Relajarla no mejora
+   nada y **reduce la protección anti-spoofing**. Se mantiene `adkim=s; aspf=s`.
+
+2. **No hay "PTR ausente" en la IP que importa.** La IP saliente que ve Gmail es
+   `217.116.26.37`, con PTR `relayoutvt05-q02.servidor-correo.net` que resuelve de
+   vuelta a la misma IP (FCrDNS correcto). La IP del NAS (`79.117.52.185`, PTR
+   genérico de Digi) es solo el hop interno de autenticación hacia el relay de
+   Hostalia; Gmail no lo evalúa. Sin acción posible ni necesaria.
+
+3. **List-Unsubscribe / acortadores / ratio imagen-texto** aplican a envío
+   **masivo/marketing**, no a un buzón personal. El mensaje de prueba era texto
+   plano sin enlaces, imágenes ni HTML → ninguna de esas penalizaciones aplica.
+   Si algún día se envía boletín masivo, entonces sí habrá que añadir
+   `List-Unsubscribe` y SPF/DKIM propios del envío.
+
 
