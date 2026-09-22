@@ -21,6 +21,10 @@
 - `docker/.env.example` — plantilla de variables secretas.
 - `DEPLOY_ROUNDCUBE.md` — guía completa de despliegue y operación.
 - `GUIA_CLIENTES_CORREO.md` — cómo configurar el correo en móvil/escritorio y usar el webmail.
+- `DIAGNOSTICO_ENTREGABILIDAD.md` — diagnóstico del SPAM (2026-09-22) y plan de entregabilidad.
+- `TEMPLATE_CORREO_CALENTAMIENTO.md` — plantilla de calentamiento de reputación.
+- `TICKET_HOSTALIA.txt` — borrador de ticket a Hostalia.
+- `newsletter/` — boletín de socias autohospedado con baja en un clic.
 
 ## DNS (Cloudflare)
 
@@ -46,6 +50,16 @@
 > ✅ **Verificado 2026-09-22**: la autenticación (SPF/DKIM/DMARC) está en `pass`
 > en Gmail; el SPAM se debe a la reputación del pool saliente de acens. Ver
 > [`DIAGNOSTICO_ENTREGABILIDAD.md`](DIAGNOSTICO_ENTREGABILIDAD.md).
+
+## Newsletter (boletín de socias) — ✅ desplegado
+
+Boletín autohospedado con **baja en un clic** (`List-Unsubscribe` + `List-Unsubscribe-Post`,
+RFC 8058), enviado por el SMTP de Hostalia. Desplegado en `/volume1/web/newsletter/`
+→ `https://www.corrientelebeche.es/newsletter/`.
+
+- Envío (SSH): `php /volume1/web/newsletter/enviar.php "Asunto" mensaje.html`
+- Endpoint de baja: `https://www.corrientelebeche.es/newsletter/baja.php`
+- Detalle, despliegue y avisos de entregabilidad: [`newsletter/README.md`](newsletter/README.md).
 
 > 🔐 No subir credenciales ni configuraciones sensibles a este repo (`.env` está en `.gitignore`).
 

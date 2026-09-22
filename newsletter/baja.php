@@ -11,10 +11,9 @@
 
 header('Content-Type: text/html; charset=UTF-8');
 
-$cfgPath = __DIR__ . '/config.php';
-$bajasFile = file_exists($cfgPath) && is_array($c = require $cfgPath) && !empty($c['bajas_file'])
-    ? $c['bajas_file']
-    : __DIR__ . '/bajas.txt';
+// Fichero de bajas. No se lee config.php (no hace falta ni credenciales);
+// así el endpoint funciona aunque config.php tenga permisos restringidos.
+$bajasFile = __DIR__ . '/bajas.txt';
 
 $email = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

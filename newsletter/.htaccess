@@ -1,0 +1,6 @@
+# Newsletter — impedir el acceso directo por web a datos sensibles.
+# (Aplica con Apache. Si el sitio corre bajo Nginx, añade una regla `location`
+#  equivalente en user.conf: denegar *.csv, *.txt y config*.php.)
+<FilesMatch "^(config\.php|config\.example\.php|lista\.csv|lista\.example\.csv|bajas\.txt)$">
+    Require all denied
+</FilesMatch>
