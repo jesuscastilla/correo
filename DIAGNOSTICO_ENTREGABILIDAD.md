@@ -190,7 +190,8 @@ caso** y, en un caso, son contraproducentes:
 3. **List-Unsubscribe / acortadores / ratio imagen-texto** aplican a envío
    **masivo/marketing**, no a un buzón personal. El mensaje de prueba era texto
    plano sin enlaces, imágenes ni HTML → ninguna de esas penalizaciones aplica.
-   Si algún día se envía boletín masivo, entonces sí habrá que añadir
-   `List-Unsubscribe` y SPF/DKIM propios del envío.
+   ✅ **Actualización (2026-09-22):** el correo pasará a usarse como *newsletter*,
+   así que ya se ha creado la solución autohospedada con baja en un clic:
+   ver [`newsletter/README.md`](newsletter/README.md).
 
 

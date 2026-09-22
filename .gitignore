@@ -1,2 +1,7 @@
 # Secretos locales: nunca subir al repo
 docker/.env
+
+# Newsletter: configuración y datos personales
+newsletter/config.php
+newsletter/lista.csv
+newsletter/bajas.txt
