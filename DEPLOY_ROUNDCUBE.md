@@ -75,13 +75,21 @@ cd /volume2/docker/roundcube && sudo /usr/local/bin/docker compose up -d --pull 
 ## Autenticación de correo (SPF / DKIM / DMARC) — ✅ configurado
 
 - **SPF**: `v=spf1 redirect=spf.dominioabsoluto.net` (Hostalia).
-- **DKIM**: `domabs._domainkey` → TXT con la clave pública de Hostalia (selector de "Dominio Absoluto").
+- **DKIM**: `domabs._domainkey` → TXT con la clave pública de Hostalia (selector de "Dominio Absoluto"). ⚠️ Clave actual de **1024 bits** (pendiente rotar a 2048).
 - **DMARC**: `_dmarc` → `v=DMARC1; p=none; rua=mailto:monderas@corrientelebeche.es; fo=1; adkim=s; aspf=s`.
   - Empezar en `p=none` (monitorizar) y subir a `quarantine`/`reject` cuando todo alinee.
+
+> ✅ **Verificado 2026-09-22** (cabeceras reales de Gmail): `dkim=pass`, `spf=pass`
+> y `dmarc=pass` → **la autenticación funciona y no es la causa del SPAM.** La
+> salida la hace el pool Postal compartido de acens (`servidor-correo.net`,
+> `217.116.26.0/24`). Diagnóstico completo y plan: ver
+> [`DIAGNOSTICO_ENTREGABILIDAD.md`](DIAGNOSTICO_ENTREGABILIDAD.md).
 
 ## Verificación de entregabilidad
 
 - Enviar un correo desde el webmail a la dirección de **mail-tester.com** → esperar 9-10/10 con DKIM/DMARC `pass`.
+- Alta gratuita en **Google Postmaster Tools** (<https://postmaster.google.com/>) y **Microsoft SNDS** para vigilar la reputación real del dominio/pool.
+- Ver `DIAGNOSTICO_ENTREGABILIDAD.md` para el diagnóstico del caso SPAM en Gmail (2026-09-22).
 
 ## Contactos — ✅ importados de Synology Contacts
 

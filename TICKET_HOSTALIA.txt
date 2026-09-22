@@ -1,0 +1,29 @@
+Asunto: Entregabilidad de corrientelebeche.es — Gmail marca como SPAM pese a SPF/DKIM/DMARC pass
+
+Buenos días.
+
+Soy titular del dominio corrientelebeche.es, con el correo alojado en vuestra
+plataforma "Dominio Absoluto" (buzón monderas@corrientelebeche.es).
+
+Los correos salientes llegan a la carpeta de spam de Gmail. Adjunto cabeceras
+del mensaje: Gmail confirma dkim=pass, spf=pass y dmarc=pass, por lo que NO es
+un problema de autenticación.
+
+La salida se realiza desde la IP 217.116.26.37
+(relayoutvt05-q02.servidor-correo.net), pool Postal de acens, rango
+217.116.26.0/24.
+
+Solicito:
+
+1. Revisar la reputación del pool saliente 217.116.26.0/24 y, si es posible,
+   reasignar a un pool con mejor reputación u ofrecer una alternativa
+   (IP dedicada con warming, si la hubiera).
+
+2. Rotar la firma DKIM a RSA 2048 bits (la clave publicada del selector
+   "domabs" es de 1024 bits) y facilitarme el selector y el valor TXT para
+   publicar en mi DNS (Cloudflare).
+
+3. Confirmar el selector y el dominio de firma (d=) actuales, y si existe un
+   panel donde pueda gestionar DKIM por mi cuenta.
+
+Gracias.

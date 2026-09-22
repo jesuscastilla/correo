@@ -39,9 +39,13 @@
 ## Autenticación de correo (SPF / DKIM / DMARC) — ✅ configurado
 
 - **SPF:** `v=spf1 redirect=spf.dominioabsoluto.net` (Hostalia).
-- **DKIM:** `domabs._domainkey` → TXT con la clave pública de Hostalia (selector de "Dominio Absoluto").
+- **DKIM:** `domabs._domainkey` → TXT con la clave pública de Hostalia (selector de "Dominio Absoluto"). ⚠️ Clave actual de **1024 bits** (pendiente rotar a 2048).
 - **DMARC:** `_dmarc` → `v=DMARC1; p=none; rua=mailto:monderas@corrientelebeche.es; fo=1; adkim=s; aspf=s`.
   - Empezar en `p=none` (monitorizar) y subir a `quarantine`/`reject` cuando todo alinee.
+
+> ✅ **Verificado 2026-09-22**: la autenticación (SPF/DKIM/DMARC) está en `pass`
+> en Gmail; el SPAM se debe a la reputación del pool saliente de acens. Ver
+> [`DIAGNOSTICO_ENTREGABILIDAD.md`](DIAGNOSTICO_ENTREGABILIDAD.md).
 
 > 🔐 No subir credenciales ni configuraciones sensibles a este repo (`.env` está en `.gitignore`).
 
