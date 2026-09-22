@@ -29,9 +29,12 @@ $cfg = require $configPath;
 $subject  = $argv[1] ?? null;
 $bodyFile = $argv[2] ?? null;
 if (!$subject || !$bodyFile || !file_exists($bodyFile)) {
-    fwrite(STDERR, "Uso: php enviar.php \"Asunto\" mensaje.html\n");
+    fwrite(STDERR, "Uso: php enviar.php \"Asunto\" mensaje.html [--dry]\n");
     exit(1);
 }
+
+// --dry: solo muestra qué se enviaría (sin conectar al SMTP).
+$dry = in_array('--dry', array_slice($argv, 1), true);
 
 $html = file_get_contents($bodyFile);
 // Texto plano derivado del HTML (parte text/plain del multipart/alternative).
@@ -47,7 +50,7 @@ if (($fh = @fopen($cfg['lista_csv'], 'r')) !== false) {
     while (($row = fgetcsv($fh)) !== false) {
         $email = strtolower(trim($row[0] ?? ''));
         if ($email && filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $recipients[] = $email;
+            $recipients[$email] = trim($row[1] ?? '');
         }
     }
     fclose($fh);
@@ -67,14 +70,24 @@ if (file_exists($cfg['bajas_file'])) {
 
 // --- Envío --------------------------------------------------------------------
 $ok = $skip = $fail = 0;
-foreach ($recipients as $email) {
+foreach ($recipients as $email => $name) {
     if (isset($bajas[$email])) {
         echo "SKIP $email (dada de baja)\n";
         $skip++;
         continue;
     }
+    $nombre = $name !== '' ? explode(' ', trim($name))[0] : '';
+    $nombre = $nombre !== '' ? $nombre : 'vecina';
+    $htmlFor = str_replace(['{{nombre}}', '{{email}}'], [$nombre, $email], $html);
+    $textFor = str_replace(['{{nombre}}', '{{email}}'], [$nombre, $email], $text);
+
+    if ($dry) {
+        echo "DRY  $nombre <$email>\n";
+        $ok++;
+        continue;
+    }
     try {
-        smtp_send($cfg, $email, $subject, $text, $html);
+        smtp_send($cfg, $email, $subject, $textFor, $htmlFor);
         echo "OK   $email\n";
         $ok++;
         if (!empty($cfg['pausa_ms'])) {
@@ -86,7 +99,7 @@ foreach ($recipients as $email) {
     }
 }
 
-echo "\nEnviados: $ok · Omitidos (baja): $skip · Fallos: $fail\n";
+echo "\n" . ($dry ? 'Simulación — ' : '') . "Enviados: $ok · Omitidos (baja): $skip · Fallos: $fail\n";
 
 // ============================================================================
 // SMTP mínimo (STARTTLS + AUTH LOGIN) — sin dependencias externas.
